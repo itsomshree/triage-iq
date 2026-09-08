@@ -1,0 +1,98 @@
+[
+  {
+    "ticket_id": "E-001",
+    "subject": "How long does a refund take?",
+    "body": "I returned a pair of headphones two weeks ago and the tracking shows it was delivered to your warehouse 6 days ago. How much longer until I see the refund on my card?",
+    "expected_category": "refund",
+    "expected_urgency": "low",
+    "expected_action": "auto_answer"
+  },
+  {
+    "ticket_id": "E-002",
+    "subject": "Package marked delivered but nothing here",
+    "body": "My order #88213 says delivered as of yesterday afternoon but there's nothing on my porch. This is a $340 order, I need help ASAP.",
+    "expected_category": "shipping",
+    "expected_urgency": "high",
+    "expected_action": "escalate"
+  },
+  {
+    "ticket_id": "E-003",
+    "subject": "Can I combine two discount codes?",
+    "body": "I have a welcome code and a referral code, can I use both on the same order or just one?",
+    "expected_category": "general_inquiry",
+    "expected_urgency": "low",
+    "expected_action": "auto_answer"
+  },
+  {
+    "ticket_id": "E-004",
+    "subject": "This is unacceptable, third time my order is wrong",
+    "body": "This is the THIRD time in a row you've sent me the wrong size. I want a manager to call me today.",
+    "expected_category": "other",
+    "expected_urgency": "critical",
+    "expected_action": "escalate"
+  },
+  {
+    "ticket_id": "E-005",
+    "subject": "App keeps crashing on checkout",
+    "body": "Every time I try to check out on the iOS app it crashes right after I enter my card details. Tried restarting my phone and reinstalling, still happens.",
+    "expected_category": "technical",
+    "expected_urgency": "high",
+    "expected_action": "escalate"
+  },
+  {
+    "ticket_id": "E-006",
+    "subject": "Question about international shipping",
+    "body": "I'm ordering from Portugal, will I owe customs fees on top of what I pay at checkout, and roughly how long does delivery take?",
+    "expected_category": "shipping",
+    "expected_urgency": "low",
+    "expected_action": "auto_answer"
+  },
+  {
+    "ticket_id": "E-007",
+    "subject": "Item arrived broken",
+    "body": "The ceramic lamp I ordered arrived with a large crack down the base, definitely broken in shipping. I have photos. What do I do to get a replacement or refund?",
+    "expected_category": "refund",
+    "expected_urgency": "medium",
+    "expected_action": "auto_answer"
+  },
+  {
+    "ticket_id": "E-008",
+    "subject": "Forgot password, reset link not arriving",
+    "body": "I requested a password reset like 20 minutes ago and nothing has shown up, checked spam too. Can you manually reset it or resend the link?",
+    "expected_category": "account",
+    "expected_urgency": "medium",
+    "expected_action": "flag_for_review"
+  },
+  {
+    "ticket_id": "E-009",
+    "subject": "Charged twice for the same order",
+    "body": "I just checked my bank statement and I was charged $89.97 twice for order #77104, same amount, same day. I need one of these charges reversed immediately.",
+    "expected_category": "billing",
+    "expected_urgency": "critical",
+    "expected_action": "escalate"
+  },
+  {
+    "ticket_id": "E-010",
+    "subject": "Do gift cards expire?",
+    "body": "My mother-in-law gave me a $50 gift card last year and I haven't used it yet, just want to check it's still valid before I try to use it.",
+    "expected_category": "general_inquiry",
+    "expected_urgency": "low",
+    "expected_action": "auto_answer"
+  },
+  {
+    "ticket_id": "E-011",
+    "subject": "Want to cancel my order",
+    "body": "I placed order #90211 about ten minutes ago and want to cancel it, I selected the wrong color.",
+    "expected_category": "general_inquiry",
+    "expected_urgency": "medium",
+    "expected_action": "auto_answer"
+  },
+  {
+    "ticket_id": "E-012",
+    "subject": "Suspicious login attempt notification",
+    "body": "I got an email saying someone tried to log into my account from a country I've never been to. I'm worried my account was compromised, please help.",
+    "expected_category": "account",
+    "expected_urgency": "critical",
+    "expected_action": "escalate"
+  }
+]

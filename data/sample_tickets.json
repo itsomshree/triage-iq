@@ -1,0 +1,62 @@
+[
+  {
+    "ticket_id": "T-1001",
+    "customer_email": "jmartinez@example.com",
+    "subject": "How long does a refund take?",
+    "body": "I returned a pair of headphones two weeks ago and the tracking shows it was delivered to your warehouse 6 days ago. How much longer until I see the refund on my card?"
+  },
+  {
+    "ticket_id": "T-1002",
+    "customer_email": "priya.n@example.com",
+    "subject": "Package marked delivered but nothing here",
+    "body": "My order #88213 says delivered as of yesterday afternoon but there's nothing on my porch and my building doesn't have a front desk. I checked with my neighbors too, nothing. This is a $340 order, I need help ASAP."
+  },
+  {
+    "ticket_id": "T-1003",
+    "customer_email": "d.chen@example.com",
+    "subject": "Can I combine two discount codes?",
+    "body": "I have a welcome code and a referral code, can I use both on the same order or just one?"
+  },
+  {
+    "ticket_id": "T-1004",
+    "customer_email": "unhappy_user99@example.com",
+    "subject": "This is unacceptable, third time my order is wrong",
+    "body": "This is the THIRD time in a row you've sent me the wrong size. I want a manager to call me today. I'm done with the automated runaround, this needs a real person to look at my account history right now."
+  },
+  {
+    "ticket_id": "T-1005",
+    "customer_email": "sam.okafor@example.com",
+    "subject": "App keeps crashing on checkout",
+    "body": "Every time I try to check out on the iOS app it crashes right after I enter my card details. Tried restarting my phone and reinstalling, still happens. I'm on iPhone 14, app version 4.2.1."
+  },
+  {
+    "ticket_id": "T-1006",
+    "customer_email": "l.fernandez@example.com",
+    "subject": "Question about international shipping",
+    "body": "I'm ordering from Portugal, will I owe customs fees on top of what I pay at checkout, and roughly how long does delivery take?"
+  },
+  {
+    "ticket_id": "T-1007",
+    "customer_email": "anna.b@example.com",
+    "subject": "Item arrived broken",
+    "body": "The ceramic lamp I ordered arrived with a large crack down the base, definitely broken in shipping. I have photos. What do I do to get a replacement or refund?"
+  },
+  {
+    "ticket_id": "T-1008",
+    "customer_email": "r.thompson@example.com",
+    "subject": "Forgot password, reset link not arriving",
+    "body": "I requested a password reset like 20 minutes ago and nothing has shown up, checked spam too. Can you manually reset it or resend the link?"
+  },
+  {
+    "ticket_id": "T-1009",
+    "customer_email": "kwilliams@example.com",
+    "subject": "Charged twice for the same order",
+    "body": "I just checked my bank statement and I was charged $89.97 twice for order #77104, same amount, same day. I need one of these charges reversed immediately, this is affecting my account balance."
+  },
+  {
+    "ticket_id": "T-1010",
+    "customer_email": "t.nguyen@example.com",
+    "subject": "Do gift cards expire?",
+    "body": "My mother-in-law gave me a $50 gift card last year and I haven't used it yet, just want to check it's still valid before I try to use it."
+  }
+]

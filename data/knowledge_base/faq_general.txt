@@ -1,0 +1,31 @@
+General FAQ
+
+How do I create an account?
+Click "Sign Up" in the top right corner of the site, enter your email and a password, and verify your email using the link we send you. You can also sign up using a Google or Apple account for faster checkout.
+
+How do I reset my password?
+Go to the login page and click "Forgot password." Enter the email associated with your account and we'll send a reset link. The link expires after 1 hour for security reasons. If you don't receive the email, check your spam folder or contact support to confirm the email on file.
+
+How do I update my account information?
+Log in and go to Account Settings. From there you can update your name, email, shipping addresses, and payment methods. Email changes require re-verification of the new address before they take effect.
+
+How do I cancel an order?
+Orders can be canceled free of charge as long as they haven't entered the packing stage. Go to Order History, select the order, and click "Cancel Order." If the option isn't available, the order has already begun processing; in that case, you'll need to wait for it to arrive and then request a refund instead.
+
+What payment methods do you accept?
+We accept all major credit and debit cards (Visa, Mastercard, American Express, Discover), PayPal, Apple Pay, and Google Pay. We do not accept payment via bank transfer, check, or cryptocurrency.
+
+Do you offer gift cards?
+Yes, digital gift cards are available in denominations from $10 to $500 and are delivered by email, usually within a few minutes of purchase. Gift cards do not expire and cannot be redeemed for cash except where required by law.
+
+How do I contact support?
+You can reach support through the in-app chat widget, by emailing support@example.com, or by submitting a ticket through the Help Center. Our support hours are Monday-Friday, 8am-8pm ET, and Saturday, 10am-4pm ET. Average response time is under 4 hours during business hours.
+
+Is my payment information secure?
+Yes. We do not store full credit card numbers on our servers. All payments are processed through PCI-compliant third-party payment processors, and our site uses TLS encryption for all data in transit.
+
+Do you have a loyalty or rewards program?
+Yes, our Rewards program gives you 1 point per dollar spent, redeemable for discounts starting at 100 points ($5 off). Points are automatically applied to your account after an order is marked delivered and do not expire as long as your account remains active.
+
+Can I use multiple discount codes on one order?
+No, only one discount code can be applied per order. If you have multiple valid codes, our system will automatically apply whichever gives you the larger discount.
