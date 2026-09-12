@@ -12,7 +12,7 @@ def escalate(
             "ticket_id": ticket.ticket_id,
             "category": classification.category.value,
             "urgency": classification.urgency.value,
-            "resoning": routing_decision.reasoning,
+            "reasoning": routing_decision.reasoning,
         }
     )
     assert isinstance(result, EscalationRecord)
