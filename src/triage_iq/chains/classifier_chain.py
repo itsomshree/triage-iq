@@ -48,7 +48,7 @@ _structured_llm = _llm.with_structured_output(TicketClassification)
 _classifier_chain = _prompt | _structured_llm
 
 
-def classifiy_ticket(ticket: IncomingTicket) -> TicketClassification:
+def classify_ticket(ticket: IncomingTicket) -> TicketClassification:
     result = _classifier_chain.invoke({"subject": ticket.subject, "body": ticket.body})
     assert isinstance(result, TicketClassification)  # narrow type for mypy/pylance
     return result
