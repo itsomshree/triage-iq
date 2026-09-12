@@ -126,6 +126,7 @@ def run_ticket(ticket: IncomingTicket) -> FinalResponse:
 
         except Exception as exc:
             stage = getattr(exc, "stage", "unknown")
+            session.rollback()
             log_stage(session, ticket.ticket_id, "pipeline_error", f"FAILED: {exc}")
             session.commit()
             raise PipelineError(ticket.ticket_id, stage, exc) from exc
