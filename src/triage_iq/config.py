@@ -17,8 +17,8 @@ def _require(name: str) -> str:
 
 # Groq (LLM)
 GROQ_API_KEY = _require("GROQ_API_KEY")
-GROQ_CLASSIFIER_MODEL = os.getenv("GROQ_CLASSIFIER_MODEL", "llama-3.1-8b-instant")
-GROQ_REASONING_MODEL = os.getenv("GROQ_REASONING_MODEL", "llama-3.3-70b-versatile")
+GROQ_CLASSIFIER_MODEL = os.getenv("GROQ_CLASSIFIER_MODEL", "openai/gpt-oss-20b")
+GROQ_REASONING_MODEL = os.getenv("GROQ_REASONING_MODEL", "openai/gpt-oss-120b")
 
 # Pinecone (vector store)
 PINECONE_API_KEY = _require("PINECONE_API_KEY")
