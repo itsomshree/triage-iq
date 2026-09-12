@@ -23,6 +23,11 @@ _PRIORITY_BY_URGENCY = {"critical": "PQ", "high": "P1", "medium": "P2", "low": "
 def escalate_ticket(
     ticket_id: str, category: str, urgency: str, reasoning: str
 ) -> EscalationRecord:
+    """
+    Create an escalation record for a support ticket that needs human
+    handling, ssigning it to the correct team with an appropriate priority,
+    and persist it to the database.
+    """
     assigned_team = _TEAM_BY_CATEGORY.get(category, "support")
     priority = _PRIORITY_BY_URGENCY.get(urgency, "P2")
     escalation_id = str(uuid.uuid4())
