@@ -32,13 +32,25 @@ def create_ticket(session: Session, ticket: IncomingTicket) -> Ticket:
         body=ticket.body,
     )
     session.add(row)
-    session.flush()  # assigns/validates without committing the transaction
+    session.flush()
     return row
 
 
 def save_classification(
     session: Session, ticket_id: str, classification: TicketClassification
 ) -> Classification:
+    existing = session.scalars(
+        select(Classification).where(Classification.ticket_id == ticket_id)
+    ).first()
+
+    if existing is not None:
+        existing.category = classification.category.value
+        existing.urgency = classification.urgency.value
+        existing.summary = classification.summary
+        existing.confidence = classification.confidence
+        session.flush()
+        return existing
+
     row = Classification(
         ticket_id=ticket_id,
         category=classification.category.value,
@@ -54,6 +66,18 @@ def save_classification(
 def save_routing_decision(
     session: Session, ticket_id: str, decision: RoutingDecision
 ) -> RoutingDecisionRecord:
+    existing = session.scalars(
+        select(RoutingDecisionRecord).where(
+            RoutingDecisionRecord.ticket_id == ticket_id
+        )
+    ).first()
+
+    if existing is not None:
+        existing.action = decision.action.value
+        existing.reasoning = decision.reasoning
+        session.flush()
+        return existing
+
     row = RoutingDecisionRecord(
         ticket_id=ticket_id,
         action=decision.action.value,
@@ -67,6 +91,17 @@ def save_routing_decision(
 def save_rag_answer(
     session: Session, ticket_id: str, answer: RagAnswer
 ) -> RagAnswerRecord:
+    existing = session.scalars(
+        select(RagAnswerRecord).where(RagAnswerRecord.ticket_id == ticket_id)
+    ).first()
+
+    if existing is not None:
+        existing.answer = answer.answer
+        existing.source_documents = answer.source_documents
+        existing.grounded = answer.grounded
+        session.flush()
+        return existing
+
     row = RagAnswerRecord(
         ticket_id=ticket_id,
         answer=answer.answer,
@@ -81,6 +116,17 @@ def save_rag_answer(
 def save_escalation(
     session: Session, ticket_id: str, escalation: EscalationRecord
 ) -> EscalationRecordRow:
+    existing = session.scalars(
+        select(EscalationRecordRow).where(EscalationRecordRow.ticket_id == ticket_id)
+    ).first()
+
+    if existing is not None:
+        existing.escalation_id = escalation.escalation_id
+        existing.assigned_team = escalation.assigned_team
+        existing.priority = escalation.priority
+        session.flush()
+        return existing
+
     row = EscalationRecordRow(
         escalation_id=escalation.escalation_id,
         ticket_id=ticket_id,
