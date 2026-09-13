@@ -53,3 +53,13 @@ class FinalResponse(BaseModel):
     latency_ms: float | None = Field(
         default=None, description="End-to-end pipeline latency in milliseconds"
     )
+
+
+class TicketRecord(BaseModel):
+    ticket_id: str
+    subject: str
+    body: str
+    classification: TicketClassification | None = None
+    routing_decision: RoutingDecision | None = None
+    rag_answer: RagAnswer | None = None
+    escalation: EscalationRecord | None = None
