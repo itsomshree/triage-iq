@@ -4,6 +4,7 @@ from triage_iq.schemas.decision import (
     RagAnswer,
     RoutingAction,
     RoutingDecision,
+    TicketRecord,
 )
 from triage_iq.schemas.ticket import (
     IncomingTicket,
@@ -21,5 +22,6 @@ __all__ = [
     "RoutingDecision",
     "TicketCategory",
     "TicketClassification",
+    "TicketRecord",
     "TicketUrgency",
 ]
