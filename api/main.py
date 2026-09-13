@@ -1,0 +1,120 @@
+from fastapi import FastAPI, HTTPException, status
+from fastapi.responses import JSONResponse
+
+from triage_iq.db import crud
+from triage_iq.db.connection import get_session
+from triage_iq.pipeline import PipelineError, run_ticket
+from triage_iq.schemas import (
+    EscalationRecord,
+    FinalResponse,
+    IncomingTicket,
+    RagAnswer,
+    RoutingAction,
+    RoutingDecision,
+    TicketCategory,
+    TicketClassification,
+    TicketRecord,
+    TicketUrgency,
+)
+
+app = FastAPI(title="TriageIQ", version="0.1.0")
+
+
+@app.exception_handler(PipelineError)
+def handle_pipeline_error(request, exc: PipelineError) -> JSONResponse:
+    return JSONResponse(
+        status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+        content={
+            "ticket_id": exc.ticket_id,
+            "stage": exc.stage,
+            "detail": str(exc.original),
+        },
+    )
+
+
+@app.get("/health")
+def health() -> dict:
+    return {"status": "ok"}
+
+
+@app.post("/tickets", response_model=FinalResponse)
+def submit_ticket(ticket: IncomingTicket) -> FinalResponse:
+    return run_ticket(ticket)
+
+
+@app.get("/tickets/{ticket_id}", response_model=TicketRecord)
+def get_ticket(ticket_id: str) -> TicketRecord:
+    with get_session() as session:
+        row = crud.get_ticket(session, ticket_id)
+        if row is None:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail=f"Ticket '{ticket_id}' not found",
+            )
+
+        classification = None
+        if row.classification is not None:
+            c = row.classification
+            classification = TicketClassification(
+                category=TicketCategory(c.category),
+                urgency=TicketUrgency(c.urgency),
+                summary=(c.summary),
+                confidence=(c.confidence),
+            )
+
+        routing_decision = None
+        if row.routing_decision is not None:
+            r = row.routing_decision
+            routing_decision = RoutingDecision(
+                action=RoutingAction(r.action), reasoning=r.reasoning
+            )
+
+        rag_answer = None
+        if row.rag_answer is not None:
+            a = row.rag_answer
+            rag_answer = RagAnswer(
+                answer=a.answer,
+                source_documents=a.source_documents,
+                grounded=a.grounded,
+            )
+
+        escalation = None
+        if row.escalation is not None:
+            e = row.escalation
+            escalation = EscalationRecord(
+                escalation_id=e.escalation_id,
+                assigned_team=e.assigned_team,
+                priority=e.priority,
+            )
+
+        return TicketRecord(
+            ticket_id=row.ticket_id,
+            subject=row.subject,
+            body=row.body,
+            classification=classification,
+            routing_decision=routing_decision,
+            rag_answer=rag_answer,
+            escalation=escalation,
+        )
+
+
+@app.get("/tickets/{ticket_id}/logs")
+def get_ticket_logs(ticket_id: str) -> list[dict]:
+    with get_session() as session:
+        ticket = crud.get_ticket(session, ticket_id)
+        if ticket is None:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail=f"Ticket '{ticket_id}' not found",
+            )
+
+        logs = crud.get_logs_for_ticket(session, ticket_id)
+        return [
+            {
+                "stage": log.stage,
+                "message": log.message,
+                "latency_ms": log.latency_ms,
+                "created_at": log.created_at.isoformat(),
+            }
+            for log in logs
+        ]
