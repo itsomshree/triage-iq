@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from sqlalchemy import select
+from sqlalchemy import func, select
 from sqlalchemy.orm import Session
 
 from triage_iq.db.models import (
@@ -163,4 +163,53 @@ def get_logs_for_ticket(session: Session, ticket_id: str) -> list[PipelineLog]:
         .where(PipelineLog.ticket_id == ticket_id)
         .order_by(PipelineLog.created_at)
     )
+    return list(session.scalars(stmt))
+
+
+# Dashboard aggregate queries
+def get_total_ticket_count(session: Session) -> int:
+    stmt = select(func.count()).select_from(Ticket)
+    return session.execute(stmt).scalar_one()
+
+
+def get_routing_action_counts(session: Session) -> dict[str, int]:
+    stmt = select(RoutingDecisionRecord.action, func.count()).group_by(
+        RoutingDecisionRecord.action
+    )
+    return {action: count for action, count in session.execute(stmt)}
+
+
+def get_category_counts(session: Session) -> dict[str, int]:
+    stmt = select(Classification.category, func.count()).group_by(
+        Classification.category
+    )
+    return {category: count for category, count in session.execute(stmt)}
+
+
+def get_urgency_counts(session: Session) -> dict[str, int]:
+    stmt = select(Classification.urgency, func.count()).group_by(Classification.urgency)
+    return {urgency: count for urgency, count in session.execute(stmt)}
+
+
+def get_avg_confidence(session: Session) -> float | None:
+    stmt = select(func.avg(Classification.confidence))
+    return session.execute(stmt).scalar()
+
+
+def get_avg_pipeline_latency_ms(session: Session) -> float | None:
+    per_ticket = (
+        select(
+            PipelineLog.ticket_id,
+            func.sum(PipelineLog.latency_ms).label("total_latency_ms"),
+        )
+        .where(PipelineLog.stage != "pipeline_error")
+        .group_by(PipelineLog.ticket_id)
+        .subquery()
+    )
+    stmt = select(func.avg(per_ticket.c.total_latency_ms))
+    return session.execute(stmt).scalar()
+
+
+def get_recent_tickets(session: Session, limit: int = 25) -> list[Ticket]:
+    stmt = select(Ticket).order_by(Ticket.created_at.desc()).limit(limit)
     return list(session.scalars(stmt))
