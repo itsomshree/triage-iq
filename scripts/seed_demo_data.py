@@ -107,7 +107,7 @@ def main() -> None:
         seed_ticket(base_url, ticket)
 
     print("\nDone. Open the dashboard to see the results:")
-    print(f"  {base_url}/dashboard-ui/")
+    print(f"  {base_url}/dashboard/")
 
 
 if __name__ == "__main__":
