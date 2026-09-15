@@ -1,6 +1,10 @@
+from pathlib import Path
+
 from fastapi import FastAPI, HTTPException, status
 from fastapi.responses import JSONResponse
+from fastapi.staticfiles import StaticFiles
 
+from api.dashboard import router as dashboard_router
 from triage_iq.db import crud
 from triage_iq.db.connection import get_session
 from triage_iq.pipeline import PipelineError, run_ticket
@@ -18,6 +22,12 @@ from triage_iq.schemas import (
 )
 
 app = FastAPI(title="TriageIQ", version="0.1.0")
+app.include_router(dashboard_router)
+
+STATIC_DIR = Path(__file__).parent / "static"
+app.mount(
+    "/dashboard-ui", StaticFiles(directory=STATIC_DIR, html=True), name="dashboard-ui"
+)
 
 
 @app.exception_handler(PipelineError)
