@@ -25,9 +25,7 @@ app = FastAPI(title="TriageIQ", version="0.1.0")
 app.include_router(dashboard_router)
 
 STATIC_DIR = Path(__file__).parent / "static"
-app.mount(
-    "/dashboard-ui", StaticFiles(directory=STATIC_DIR, html=True), name="dashboard-ui"
-)
+app.mount("/dashboard", StaticFiles(directory=STATIC_DIR, html=True), name="dashboard")
 
 
 @app.exception_handler(PipelineError)
