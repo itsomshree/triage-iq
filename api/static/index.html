@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TriageIQ – Ops Console</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="dashboard.css" />
+  <script>
+    (function () {
+      var saved = localStorage.getItem("theme");
+      var theme =
+        saved ||
+        (window.matchMedia("(prefers-color-scheme: dark)").matches
+          ? "dark"
+          : "light");
+      document.documentElement.setAttribute("data-theme", theme);
+    })();
+  </script>
+</head>
+
+<body>
+  <header class="topbar">
+    <div class="topbar-title">
+      <span class="mark">◈</span>
+      <div>
+        <h1>TriageIQ</h1>
+        <p>Ticket triage, Watch live</p>
+      </div>
+    </div>
+    <div class="topbar-status">
+      <span id="updated-at" class="updated-at" aria-live="polite">Loading…</span>
+      <button id="refresh-btn" class="refresh-btn" type="button">
+        <span class="refresh-icon" aria-hidden="true">↻</span>Refresh
+      </button>
+      <button id="theme-toggle" class="refresh-btn" type="button" aria-label="Toggle dark theme">
+        ☾
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <section class="stat-strip" id="stat-strip" aria-label="Routing summary">
+      <div class="stat-block" data-action="auto_answer">
+        <p class="stat-label">Auto-answered</p>
+        <p class="stat-value" id="stat-auto">—</p>
+      </div>
+      <div class="stat-block" data-action="escalate">
+        <p class="stat-label">Escalated</p>
+        <p class="stat-value" id="stat-escalate">—</p>
+      </div>
+      <div class="stat-block" data-action="flag_for_review">
+        <p class="stat-label">Flagged for review</p>
+        <p class="stat-value" id="stat-flag">—</p>
+      </div>
+      <div class="stat-block stat-block-muted">
+        <p class="stat-label">Avg. confidence</p>
+        <p class="stat-value" id="stat-confidence">—</p>
+      </div>
+      <div class="stat-block stat-block-muted">
+        <p class="stat-label">Avg. latency</p>
+        <p class="stat-value" id="stat-latency">—</p>
+      </div>
+    </section>
+
+    <section class="breakdowns">
+      <div class="panel">
+        <h2>By category</h2>
+        <div id="category-chart" class="bar-chart"></div>
+      </div>
+      <div class="panel">
+        <h2>By urgency</h2>
+        <div id="urgency-chart" class="bar-chart"></div>
+      </div>
+    </section>
+
+    <section class="panel routing-panel">
+      <h2>Routing mix</h2>
+      <div id="routing-chart" class="pie-chart"></div>
+    </section>
+
+    <section class="panel table-panel">
+      <h2>Recent tickets</h2>
+      <div class="table-scroll">
+        <table id="tickets-table">
+          <thead>
+            <tr>
+              <th>Ticket</th>
+              <th>Subject</th>
+              <th>Category</th>
+              <th>Urgency</th>
+              <th>Confidence</th>
+              <th>Received</th>
+            </tr>
+          </thead>
+          <tbody id="tickets-body">
+            <tr>
+              <td colspan="6" class="empty-row">Loading…</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <div id="ticket-modal" class="modal-overlay" hidden>
+    <div class="modal-panel" role="dialog" aria-modal="true">
+      <button id="modal-close" class="modal-close" type="button" aria-label="Close">✕</button>
+      <div id="modal-body">
+        <p class="modal-loading">Loading…</p>
+      </div>
+    </div>
+  </div>
+
+  <script src="dashboard.js"></script>
+</body>
+
+</html>
