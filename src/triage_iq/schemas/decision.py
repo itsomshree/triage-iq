@@ -34,10 +34,12 @@ class RagAnswer(BaseModel):
 
 class EscalationRecord(BaseModel):
     escalation_id: str = Field(..., description="ID of the created escalation record")
-    assigned_team: str = Field(
-        ..., description="Team the ticket was routed to, e.g. 'billing', 'engineering'"
+    assigned_team: str = Field(...)
+    priority: str = Field(...)
+    trello_card_url: str | None = Field(
+        default=None,
+        description="URL of the Trello card created for this escalation, if configured",
     )
-    priority: str = Field(..., description="Priority assigned to the escalation")
 
 
 class FinalResponse(BaseModel):
