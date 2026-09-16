@@ -94,5 +94,125 @@
     "expected_category": "account",
     "expected_urgency": "critical",
     "expected_action": "escalate"
+  },
+  {
+    "ticket_id": "E-013",
+    "subject": "Customs fees and delivery time to the UK",
+    "body": "Do you charge customs fees if I'm ordering from the UK, and how many days until it arrives?",
+    "expected_category": "shipping",
+    "expected_urgency": "low",
+    "expected_action": "auto_answer"
+  },
+  {
+    "ticket_id": "E-014",
+    "subject": "Tracking hasn't moved in over a week",
+    "body": "My order shipped 9 days ago and tracking hasn't moved in over a week. Should I be worried?",
+    "expected_category": "shipping",
+    "expected_urgency": "medium",
+    "expected_action": "auto_answer"
+  },
+  {
+    "ticket_id": "E-015",
+    "subject": "Need to update my shipping address",
+    "body": "I need to update my shipping address, I don't think my order has shipped yet.",
+    "expected_category": "general_inquiry",
+    "expected_urgency": "low",
+    "expected_action": "auto_answer"
+  },
+  {
+    "ticket_id": "E-016",
+    "subject": "Can I stack a discount code with a gift card?",
+    "body": "Can I stack a discount code with a gift card on the same order?",
+    "expected_category": "general_inquiry",
+    "expected_urgency": "low",
+    "expected_action": "escalate"
+  },
+  {
+    "ticket_id": "E-017",
+    "subject": "Overnight shipping cutoff",
+    "body": "If I order in the next hour, will it qualify for overnight shipping?",
+    "expected_category": "shipping",
+    "expected_urgency": "low",
+    "expected_action": "auto_answer"
+  },
+  {
+    "ticket_id": "E-018",
+    "subject": "International order running long",
+    "body": "It's been 17 business days and my order to Germany still hasn't arrived, is that normal?",
+    "expected_category": "shipping",
+    "expected_urgency": "medium",
+    "expected_action": "auto_answer"
+  },
+  {
+    "ticket_id": "E-019",
+    "subject": "Combining two orders into one shipment",
+    "body": "If I place a second order today, can it ship together with the one I placed yesterday?",
+    "expected_category": "general_inquiry",
+    "expected_urgency": "low",
+    "expected_action": "escalate"
+  },
+  {
+    "ticket_id": "E-020",
+    "subject": "One earbud not working",
+    "body": "One earbud in the pair I ordered doesn't produce sound. Would like a replacement whenever is convenient, no rush.",
+    "expected_category": "refund",
+    "expected_urgency": "medium",
+    "expected_action": "auto_answer"
+  },
+  {
+    "ticket_id": "E-022",
+    "subject": "Missing charging cable",
+    "body": "My order arrived but the charging cable wasn't in the box. No rush, just let me know how to get the missing part.",
+    "expected_category": "refund",
+    "expected_urgency": "low",
+    "expected_action": "escalate"
+  },
+  {
+    "ticket_id": "E-022",
+    "subject": "Missing charging cable",
+    "body": "My order arrived but the charging cable wasn't in the box. No rush, just let me know how to get the missing part.",
+    "expected_category": "refund",
+    "expected_urgency": "low",
+    "expected_action": "escalate"
+  },
+  {
+    "ticket_id": "E-023",
+    "subject": "Overcharged on an order I just placed",
+    "body": "I was charged $15 more than the listed price on an order I placed 20 minutes ago -- can this be corrected right now?",
+    "expected_category": "billing",
+    "expected_urgency": "critical",
+    "expected_action": "escalate"
+  },
+  {
+    "ticket_id": "E-024",
+    "subject": "Small overcharge from a few weeks ago",
+    "body": "I noticed I was overcharged by about $5 on an order that arrived a few weeks ago. Not urgent, just want it corrected eventually.",
+    "expected_category": "billing",
+    "expected_urgency": "low",
+    "expected_action": "escalate"
+  },
+  {
+    "ticket_id": "E-025",
+    "subject": "Will bundle items arrive together?",
+    "body": "I ordered a bundle with items from different warehouses -- will they all arrive in one box or come separately?",
+    "expected_category": "shipping",
+    "expected_urgency": "low",
+    "expected_action": "auto_answer"
+  },
+  {
+    "ticket_id": "E-026",
+    "subject": "Locked out, password changed without me",
+    "body": "I can't log into my account anymore and just got an email saying my password was changed, but it wasn't me.",
+    "expected_category": "account",
+    "expected_urgency": "critical",
+    "expected_action": "escalate"
+  },
+  {
+    "ticket_id": "E-027",
+    "subject": "Search filters slow to load",
+    "body": "The search filters on the website take a long time to load but eventually work. Not blocking me, just slow.",
+    "expected_category": "technical",
+    "expected_urgency": "medium",
+    "expected_action": "escalate"
   }
 ]
