@@ -104,6 +104,7 @@ def run_ticket(ticket: IncomingTicket) -> FinalResponse:
             if routing_decision.action == RoutingAction.ESCALATE:
                 with _stage("escalation"), timer() as t:
                     escalation = escalate(ticket, classification, routing_decision)
+                    crud.save_escalation(session, ticket.ticket_id, escalation)
                 log_stage(
                     session,
                     ticket.ticket_id,
