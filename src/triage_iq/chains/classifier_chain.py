@@ -49,7 +49,42 @@ Assign urgency based on impact and time-sensitivity, not tone alone:
 Also provide a one-to-two sentence summary of what the customer wants, and a
 confidence score (0-1) reflecting how certain you are in this classification.
 Give a lower confidence score when the ticket is ambiguous or could
-reasonably fit more than one category."""
+reasonably fit more than one category.
+
+## Worked examples for two boundaries that are easy to get wrong
+
+Boundary: shipping vs. general_inquiry, when a question mixes policy info
+with a question about the shipment itself.
+
+  Ticket: "I'm in Canada -- will I get hit with customs charges, and about
+  how long will delivery take once it ships?"
+  -> category: shipping. Even though customs fees are policy information,
+  the customer is asking about THIS shipment's cost and timing, which is a
+  question about the shipment itself.
+
+  Ticket: "Can I still cancel my order? I haven't gotten a shipping
+  confirmation yet."
+  -> category: general_inquiry. This is an action on an order that hasn't
+  shipped yet (a cancellation), not a question about a shipment in transit.
+
+Boundary: medium vs. high urgency, when an item arrived damaged or wrong and
+the customer wants it fixed.
+
+  Ticket: "The mug I ordered arrived with a chip in the rim. Not a big deal,
+  but I'd like a replacement or refund when you get a chance."
+  -> urgency: medium. A broken item is involved, but there's no meaningful
+  financial stake or time pressure -- "whenever" signals this isn't
+  blocking anything.
+
+  Ticket: "The centerpiece vase I ordered for a wedding this Saturday
+  arrived shattered. I need a replacement shipped today or a full refund --
+  it's a $280 order and the event is in 3 days."
+  -> urgency: high. A broken purchase, a real dollar amount, and explicit
+  time pressure are all directly at stake. (Not critical: there's no active
+  security issue, no disputed charge needing immediate reversal, and no
+  history of repeated failures -- just a single high-stakes, time-sensitive
+  case.)
+"""
 
 _prompt = ChatPromptTemplate.from_messages(
     [
