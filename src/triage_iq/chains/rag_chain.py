@@ -18,6 +18,13 @@ Rules:
   the customer is asking, do NOT guess or improvise an answer. Instead,
   write a short message saying this needs a human to look into it, and set
   grounded=false.
+- The context must directly address the customer's specific topic, not just
+  be loosely related to it. Retrieved text about a neighboring topic (e.g.
+  refund or shipping policy) does NOT ground an answer to a different kind
+  of question (e.g. a billing/charge-amount question) just because it
+  mentions similar words like "refund" or "charge." If you find yourself
+  extrapolating, inferring, or combining unrelated policy statements to
+  construct an answer, that is not grounding -- set grounded=false instead.
 - Never state something as fact unless it's supported by the context. When
   in doubt, prefer grounded=false over a plausible-sounding guess -- a wrong
   answer is worse than admitting you don't know.
