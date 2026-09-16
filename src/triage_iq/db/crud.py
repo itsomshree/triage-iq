@@ -124,6 +124,7 @@ def save_escalation(
         existing.escalation_id = escalation.escalation_id
         existing.assigned_team = escalation.assigned_team
         existing.priority = escalation.priority
+        existing.trello_card_url = escalation.trello_card_url
         session.flush()
         return existing
 
@@ -132,6 +133,7 @@ def save_escalation(
         ticket_id=ticket_id,
         assigned_team=escalation.assigned_team,
         priority=escalation.priority,
+        trello_card_url=escalation.trello_card_url,
     )
     session.add(row)
     session.flush()
