@@ -94,10 +94,10 @@ class EscalationRecordRow(Base):
     ticket_id: Mapped[str] = mapped_column(ForeignKey("tickets.ticket_id"), unique=True)
     assigned_team: Mapped[str] = mapped_column(String(64), nullable=False)
     priority: Mapped[str] = mapped_column(String(16), nullable=False)
+    trello_card_url: Mapped[str | None] = mapped_column(String(512), nullable=True)
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default=func.now()
     )
-
     ticket: Mapped[Ticket] = relationship(back_populates="escalation")
 
 
