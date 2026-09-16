@@ -33,6 +33,12 @@ SUPABASE_URL = _require("SUPABASE_URL")
 SUPABASE_KEY = _require("SUPABASE_KEY")
 DATABASE_URL = _require("DATABASE_URL")
 
+# Trello
+TRELLO_API_KEY = os.getenv("TRELLO_API_KEY")
+TRELLO_API_TOKEN = os.getenv("TRELLO_API_TOKEN")
+TRELLO_BOARD_NAME = os.getenv("TRELLO_BOARD_NAME", "TriageIQ Escalation")
+TRELLO_ENABLED = bool(TRELLO_API_KEY and TRELLO_API_TOKEN)
+
 # Retrieval / chunking
 CHUNK_SIZE = int(os.getenv("CHUNK_SIZE", "500"))
 CHUNK_OVERLAP = int(os.getenv("CHUNK_OVERLAP", "50"))
