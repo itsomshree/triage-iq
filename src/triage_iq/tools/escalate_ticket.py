@@ -2,8 +2,6 @@ import uuid
 
 from langchain_core.tools import tool
 
-from triage_iq.db import crud
-from triage_iq.db.connection import get_session
 from triage_iq.schemas import EscalationRecord
 
 _TEAM_BY_CATEGORY = {
@@ -24,19 +22,21 @@ def escalate_ticket(
     ticket_id: str, category: str, urgency: str, reasoning: str
 ) -> EscalationRecord:
     """
-    Create an escalation record for a support ticket that needs human
-    handling, ssigning it to the correct team with an appropriate priority,
-    and persist it to the database.
+    Decide the correct team and priority for a support ticket that needs
+    human handling, and build an escalation record for it.
+
+    This tool is intentionally compute-only and does not touch the
+    database: it's invoked from inside triage_iq.pipeline's ticket-level
+    transaction, and persisting from a second, independent session there
+    would try to write a row referencing a ticket that transaction can't
+    see yet. The caller (triage_iq.pipeline.run_ticket) is responsible for
+    persisting the returned record via triage_iq.db.crud.save_escalation
+    using its own session.
     """
     assigned_team = _TEAM_BY_CATEGORY.get(category, "support")
     priority = _PRIORITY_BY_URGENCY.get(urgency, "P2")
     escalation_id = str(uuid.uuid4())
 
-    escalation = EscalationRecord(
+    return EscalationRecord(
         escalation_id=escalation_id, assigned_team=assigned_team, priority=priority
     )
-
-    with get_session() as session:
-        crud.save_escalation(session, ticket_id=ticket_id, escalation=escalation)
-
-    return escalation
