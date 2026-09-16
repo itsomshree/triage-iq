@@ -93,6 +93,7 @@ def get_ticket(ticket_id: str) -> TicketRecord:
                 escalation_id=e.escalation_id,
                 assigned_team=e.assigned_team,
                 priority=e.priority,
+                trello_card_url=e.trello_card_url
             )
 
         return TicketRecord(
