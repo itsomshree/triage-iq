@@ -1,8 +1,6 @@
 import hashlib
 
 from langchain_core.documents import Document
-from langchain_huggingface import HuggingFaceEmbeddings
-from langchain_pinecone import PineconeVectorStore
 from pinecone import Pinecone, ServerlessSpec
 
 from triage_iq.config import (
@@ -12,13 +10,21 @@ from triage_iq.config import (
     PINECONE_INDEX_NAME,
 )
 
-_pc = Pinecone(api_key=PINECONE_API_KEY)
+_pc: Pinecone | None = None
+
+
+def _get_pinecone_client() -> Pinecone:
+    global _pc
+    if _pc is None:
+        _pc = Pinecone(api_key=PINECONE_API_KEY)
+    return _pc
 
 
 def _ensure_index_exists() -> None:
-    existing = {index.name for index in _pc.list_indexes()}
+    pc = _get_pinecone_client()
+    existing = {index.name for index in pc.list_indexes()}
     if PINECONE_INDEX_NAME not in existing:
-        _pc.create_index(
+        pc.create_index(
             name=PINECONE_INDEX_NAME,
             dimension=EMBEDDING_DIMENSIONS,
             metric="cosine",
@@ -26,10 +32,14 @@ def _ensure_index_exists() -> None:
         )
 
 
-def get_vector_store() -> PineconeVectorStore:
+def get_vector_store():
+    from langchain_huggingface import HuggingFaceEmbeddings
+    from langchain_pinecone import PineconeVectorStore
+
     _ensure_index_exists()
     embeddings = HuggingFaceEmbeddings(model_name=EMBEDDING_MODEL_NAME)
-    index = _pc.Index(PINECONE_INDEX_NAME)
+    pc = _get_pinecone_client()
+    index = pc.Index(PINECONE_INDEX_NAME)
     return PineconeVectorStore(index=index, embedding=embeddings)
 
 
