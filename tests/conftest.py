@@ -77,6 +77,7 @@ def sample_escalation() -> EscalationRecord:
         escalation_id="esc-123",
         assigned_team="billing",
         priority="P2",
+        trello_card_url="https://trello.com/c/abc123",
     )
 
 
@@ -117,10 +118,8 @@ def make_ticket_row(
     routing_decision=None,
     rag_answer=None,
     escalation=None,
+    trello_card_url=None,
 ) -> SimpleNamespace:
-    """Lightweight stand-in for a Ticket ORM row, with just the attributes
-    api.main.get_ticket actually reads. Avoids needing a real SQLAlchemy
-    model or database for these tests."""
     return SimpleNamespace(
         ticket_id=ticket_id,
         subject=subject,
@@ -129,4 +128,5 @@ def make_ticket_row(
         routing_decision=routing_decision,
         rag_answer=rag_answer,
         escalation=escalation,
+        trello_card_url=trello_card_url,
     )
