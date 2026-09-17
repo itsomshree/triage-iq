@@ -18,6 +18,7 @@ dependencies = [
     "pydantic>=2.13.5",
     "python-dotenv>=1.2.3",
     "sentence-transformers>=6.0.1",
+    "torch>=2.14.0",
     "slowapi>=0.1.10",
     "sqlalchemy>=2.0.52",
     "supabase>=2.31.0",
@@ -41,3 +42,11 @@ build-backend = "hatchling.build"
 testpaths = ["tests"]
 pythonpath = ["."]
 addopts = "-ra"
+
+[tool.uv.sources]
+torch = { index = "pytorch-cpu" }
+
+[[tool.uv.index]]
+name = "pytorch-cpu"
+url = "https://download.pytorch.org/whl/cpu"
+explicit = true

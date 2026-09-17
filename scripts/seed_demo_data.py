@@ -36,7 +36,7 @@ def _request(url: str, method: str = "GET", payload: dict | None = None) -> dict
     headers = {"Content-Type": "application/json"} if data else {}
     req = Request(url, data=data, headers=headers, method=method)
 
-    with urlopen(req, timeout=60) as resp:
+    with urlopen(req, timeout=180) as resp:
         body = resp.read()
         return json.loads(body) if body else None
 
