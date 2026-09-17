@@ -1,0 +1,43 @@
+services:
+  - type: web
+    name: triage-iq
+    runtime: python
+    plan: free
+    buildCommand: pip install uv && uv sync --frozen
+    startCommand: uv run uvicorn api.main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      # LLM
+      - key: GROQ_API_KEY
+        sync: false
+      - key: GROQ_CLASSIFIER_MODEL
+        value: openai/gpt-oss-120b
+      - key: GROQ_REASONING_MODEL
+        value: openai/gpt-oss-120b
+
+      # Vector store
+      - key: PINECONE_API_KEY
+        sync: false
+      - key: PINECONE_INDEX_NAME
+        value: triage-iq-kb
+      - key: EMBEDDING_MODEL_NAME
+        value: sentence-transformers/all-MiniLM-L6-v2
+
+      # Database
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_KEY
+        sync: false
+      - key: DATABASE_URL
+        sync: false
+      - key: APP_BASE_URL
+        sync: false
+
+      # Retrieval / chunking / routing
+      - key: CHUNK_SIZE
+        value: "500"
+      - key: CHUNK_OVERLAP
+        value: "50"
+      - key: RETRIEVAL_TOP_K
+        value: "4"
+      - key: LOW_CONFIDENCE_THRESHOLD
+        value: "0.6"
