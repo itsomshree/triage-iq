@@ -1,8 +1,12 @@
 from pathlib import Path
 
-from fastapi import FastAPI, HTTPException, status
-from fastapi.responses import JSONResponse
+from fastapi import FastAPI, HTTPException, Request, status
+from fastapi.responses import JSONResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
+from slowapi import Limiter, _rate_limit_exceeded_handler
+from slowapi.errors import RateLimitExceeded
+from slowapi.middleware import SlowAPIMiddleware
+from slowapi.util import get_remote_address
 
 from api.dashboard import router as dashboard_router
 from triage_iq.db import crud
@@ -27,6 +31,11 @@ app.include_router(dashboard_router)
 STATIC_DIR = Path(__file__).parent / "static"
 app.mount("/dashboard", StaticFiles(directory=STATIC_DIR, html=True), name="dashboard")
 
+limiter = Limiter(key_func=get_remote_address)
+app.state.limiter = limiter
+app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)  # type: ignore[arg-type]
+app.add_middleware(SlowAPIMiddleware)
+
 
 @app.exception_handler(PipelineError)
 def handle_pipeline_error(request, exc: PipelineError) -> JSONResponse:
@@ -40,13 +49,19 @@ def handle_pipeline_error(request, exc: PipelineError) -> JSONResponse:
     )
 
 
+@app.get("/", include_in_schema=False)
+def root() -> RedirectResponse:
+    return RedirectResponse(url="/dashboard/")
+
+
 @app.get("/health")
 def health() -> dict:
     return {"status": "ok"}
 
 
 @app.post("/tickets", response_model=FinalResponse)
-def submit_ticket(ticket: IncomingTicket) -> FinalResponse:
+@limiter.limit("5/minute")
+def submit_ticket(request: Request, ticket: IncomingTicket) -> FinalResponse:
     return run_ticket(ticket)
 
 
@@ -93,7 +108,7 @@ def get_ticket(ticket_id: str) -> TicketRecord:
                 escalation_id=e.escalation_id,
                 assigned_team=e.assigned_team,
                 priority=e.priority,
-                trello_card_url=e.trello_card_url
+                trello_card_url=e.trello_card_url,
             )
 
         return TicketRecord(
