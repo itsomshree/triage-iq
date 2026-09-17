@@ -92,6 +92,7 @@ def test_get_ticket_fully_populated(
             escalation_id=sample_escalation.escalation_id,
             assigned_team=sample_escalation.assigned_team,
             priority=sample_escalation.priority,
+            trello_card_url=sample_escalation.trello_card_url,
         ),
     )
     mock_crud.get_ticket.return_value = row
@@ -105,6 +106,7 @@ def test_get_ticket_fully_populated(
     assert body["routing_decision"]["action"] == "auto_answer"
     assert body["rag_answer"]["grounded"] is True
     assert body["escalation"]["assigned_team"] == "billing"
+    assert body["escalation"]["trello_card_url"] == "https://trello.com/c/abc123"
 
 
 def test_get_ticket_partially_populated(client, mock_crud, mock_get_session):
