@@ -13,8 +13,10 @@ def create_trello_card(
     ticket_id: str,
     subject: str,
     body: str,
+    customer_email: str | None,
     category: str,
     urgency: str,
+    summary: str,
     confidence: float,
     assigned_team: str,
     priority: str,
@@ -30,11 +32,13 @@ def create_trello_card(
         return None
 
     description = (
+        f"**Customer:** {customer_email or 'unknown'}\n"
         f"**Category:** {category}\n"
         f"**Urgency:** {urgency}\n"
         f"**Classifier confidence:** {confidence:.2f}\n\n"
+        f"**Summary:** {summary}\n\n"
         f"**Customer message:**\n{body}\n\n"
-        f"Full record: /tickets/{ticket_id}"
+        f"**View full trace:** {{your deployed URL}}/tickets/{ticket_id}"
     )
 
     try:
