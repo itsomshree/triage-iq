@@ -2,7 +2,7 @@ import logging
 
 from langchain_core.tools import tool
 
-from triage_iq.config import TRELLO_ENABLED
+from triage_iq.config import APP_BASE_URL, TRELLO_ENABLED
 from triage_iq.integrations.trello_board import create_card, get_label_id, get_list_id
 
 logger = logging.getLogger("triage_iq")
@@ -38,7 +38,7 @@ def create_trello_card(
         f"**Classifier confidence:** {confidence:.2f}\n\n"
         f"**Summary:** {summary}\n\n"
         f"**Customer message:**\n{body}\n\n"
-        f"**View full trace:** {{your deployed URL}}/tickets/{ticket_id}"
+        f"**View full trace:** {APP_BASE_URL}/tickets/{ticket_id}"
     )
 
     try:
