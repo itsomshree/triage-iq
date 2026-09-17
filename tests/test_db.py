@@ -112,13 +112,21 @@ def test_save_escalation_inserts_then_updates(db_session):
     crud.save_escalation(
         db_session,
         "T-1001",
-        EscalationRecord(escalation_id="esc-1", assigned_team="billing", priority="P2"),
+        EscalationRecord(
+            escalation_id="esc-1",
+            assigned_team="billing",
+            priority="P2",
+            trello_card_url="https://trello.com/c/first",
+        ),
     )
     crud.save_escalation(
         db_session,
         "T-1001",
         EscalationRecord(
-            escalation_id="esc-2", assigned_team="engineering", priority="P1"
+            escalation_id="esc-2",
+            assigned_team="engineering",
+            priority="P1",
+            trello_card_url="https://trello.com/c/second",
         ),
     )
 
@@ -127,6 +135,7 @@ def test_save_escalation_inserts_then_updates(db_session):
     assert ticket.escalation is not None
     assert ticket.escalation.escalation_id == "esc-2"
     assert ticket.escalation.assigned_team == "engineering"
+    assert ticket.escalation.trello_card_url == "https://trello.com/c/second"
 
 
 def test_add_log_is_insert_only(db_session):
