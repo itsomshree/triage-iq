@@ -3,7 +3,6 @@ from langchain_groq import ChatGroq
 from pydantic import SecretStr
 
 from triage_iq.config import GROQ_API_KEY, GROQ_REASONING_MODEL
-from triage_iq.retrievers import get_compression_retriever
 from triage_iq.schemas import IncomingTicket, RagAnswer
 
 _SYSTEM_PROMTP = """You are a support agent answering customer tickets using
@@ -49,6 +48,8 @@ _rag_chain = _prompt | _structured_llm
 
 
 def answer_ticket(ticket: IncomingTicket) -> RagAnswer:
+    from triage_iq.retrievers import get_compression_retriever
+
     retriever = get_compression_retriever()
     query = f"{ticket.subject}\n{ticket.body}"
     retrieved_docs = retriever.invoke(query)
