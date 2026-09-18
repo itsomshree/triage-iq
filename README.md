@@ -17,23 +17,23 @@ Incoming Ticket
       ▼
 [2] Routing Chain (rule-based on classifier output)
       │
-   ┌──┼────────────────────┐
-   ▼  ▼                    ▼
-Auto-Answer            Escalate              Flag for Review
-(RAG chain)            (tool calling)         (no further action)
-   │                      │
-   ▼                      ▼
-Retrieve from          escalate_ticket tool
-Pinecone KB,           → decide team/priority
-compress + generate    create_trello_card tool
-answer, check          → real Trello API call
-groundedness              │
-   │                      │
-   └──────────┬───────────┘
-              ▼
-      Structured Final Response
-              │
-              ▼
+      ├────────────────────┬──────────────────────────┐
+      ▼                    ▼                          ▼
+ Auto-Answer            Escalate               Flag for Review
+ (RAG chain)          (tool calling)         (no further action —
+      │                    │                  left for a human
+      ▼                    ▼                    to pick up)
+ Retrieve from         escalate_ticket tool             │
+ Pinecone KB,          → decide team/priority           │
+ compress + generate   create_trello_card tool          │
+ answer, check         → real Trello API call           │
+ groundedness              │                            │ 
+      │                    │                            │
+      └────────────┬───────┴────────────────────────────┘
+                   ▼
+         Structured Final Response
+                   │
+                   ▼
    Persisted to Postgres (ticket, classification,
    routing decision, RAG answer, escalation, stage logs)
    + returned via FastAPI + visible on the ops dashboard
