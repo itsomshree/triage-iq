@@ -11,6 +11,7 @@ from triage_iq.config import (
 )
 
 _pc: Pinecone | None = None
+_vector_store = None  # cached after first load
 
 
 def _get_pinecone_client() -> Pinecone:
@@ -33,6 +34,10 @@ def _ensure_index_exists() -> None:
 
 
 def get_vector_store():
+    global _vector_store
+    if _vector_store is not None:
+        return _vector_store
+
     from langchain_huggingface import HuggingFaceEmbeddings
     from langchain_pinecone import PineconeVectorStore
 
@@ -40,7 +45,8 @@ def get_vector_store():
     embeddings = HuggingFaceEmbeddings(model_name=EMBEDDING_MODEL_NAME)
     pc = _get_pinecone_client()
     index = pc.Index(PINECONE_INDEX_NAME)
-    return PineconeVectorStore(index=index, embedding=embeddings)
+    _vector_store = PineconeVectorStore(index=index, embedding=embeddings)
+    return _vector_store
 
 
 def _chunk_id(chunk: Document) -> str:
