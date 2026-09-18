@@ -1,6 +1,7 @@
 import argparse
 import json
 import os
+import time
 from pathlib import Path
 from urllib.error import HTTPError, URLError
 from urllib.request import Request, urlopen
@@ -105,6 +106,7 @@ def main() -> None:
             continue
 
         seed_ticket(base_url, ticket)
+        time.sleep(13)
 
     print("\nDone. Open the dashboard to see the results:")
     print(f"  {base_url}/dashboard/")
